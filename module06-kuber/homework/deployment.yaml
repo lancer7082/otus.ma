@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: homework-kuber-depl
+  labels:
+    app: homework-kuber
+spec:
+  replicas: 3
+  strategy: 
+    type: Recreate
+  selector:
+    matchLabels:
+      app: homework-kuber
+  template:
+    metadata:
+      labels:
+        app: homework-kuber
+    spec:
+      containers:
+      - name: homework-kuber-container
+        image: lancer7082/module02-homework:1.0
+        ports:
+        - containerPort: 8000
