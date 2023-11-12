@@ -12,17 +12,17 @@ USER appuser
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 ARG configuration=Release
 WORKDIR /src
-COPY ["homework.csproj", "./"]
-RUN dotnet restore "homework.csproj"
-COPY . .
-WORKDIR "/src/."
-RUN dotnet build "homework.csproj" -c $configuration -o /app/build
+COPY ["./../Otus.Msa.Homework1.csproj", "Otus.Msa.Homework1/"]
+RUN dotnet restore "Otus.Msa.Homework1/Otus.Msa.Homework1.csproj"
+COPY . "Otus.Msa.Homework1/"
+WORKDIR "Otus.Msa.Homework1"
+RUN dotnet build "Otus.Msa.Homework1.csproj" -c $configuration -o /app/build
 
 FROM build AS publish
 ARG configuration=Release
-RUN dotnet publish "homework.csproj" -c $configuration -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "Otus.Msa.Homework1.csproj" -c $configuration -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "homework.dll"]
+ENTRYPOINT ["dotnet", "Otus.Msa.Homework1.dll"]

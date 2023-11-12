@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: homework-kuber-depl
+  namespace: homework
   labels:
     app: homework-kuber
 spec:

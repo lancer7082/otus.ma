@@ -2,6 +2,9 @@ apiVersion: v1
 kind: Service
 metadata:
   name: homework-kuber-service
+  namespace: homework
+  labels:
+    app: homework-kuber
 spec:
   selector:
     app: homework-kuber
