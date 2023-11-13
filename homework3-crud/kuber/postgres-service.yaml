@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: homework3-postgres-service
+  namespace: homework3
+  labels:
+    app: homework3-app
+    name: postgres-pod
+spec:
+  type: NodePort
+  ports:
+    - port: 5432
+      targetPort: 5432
+  selector:
+    app: homework3-app
+    name: postgres-pod

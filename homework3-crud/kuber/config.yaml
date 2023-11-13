@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: homework3-config
+  namespace: homework3
+  labels:
+    app: homework3-app  
+data:
+  ASPNETCORE_ENVIRONMENT: Development
+  RUN_FROM: Kuber
+  #Postgres__ConnectionString: Server=homework3-postgres-service;Database=users;User Id=dev;Password=dev

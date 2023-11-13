@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: homework3-service
+  namespace: homework3
+  labels:
+    app: homework3-app
+spec:
+  selector:
+    app: homework3-app
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8000
+  type: LoadBalancer
