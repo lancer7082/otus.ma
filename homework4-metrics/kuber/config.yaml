@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: homework4-config
+  namespace: homework4
+  labels:
+    app: homework4-app  
+data:
+  ASPNETCORE_ENVIRONMENT: Development
+  RUN_FROM: Kuber

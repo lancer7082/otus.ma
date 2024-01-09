@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: homework4-depl
+  namespace: homework4
+  labels:
+    app: homework4-app
+spec:
+  replicas: 3
+  strategy: 
+    type: Recreate
+  selector:
+    matchLabels:
+      app: homework4-app
+  template:
+    metadata:
+      labels:
+        app: homework4-app
+    spec:
+      containers:
+      - name: homework4-container
+        image: lancer7082/otus-msa-homework4:1.3
+        ports:
+        - containerPort: 8000
+        env:
+          - name: Postgres__ConnectionString
+            valueFrom:
+              secretKeyRef:
+                name: homework4-secrets
+                key: DB_CONNECTION_STRING
+          - name: ASPNETCORE_ENVIRONMENT
+            valueFrom:
+              configMapKeyRef: 
+                name: homework4-config
+                key: ASPNETCORE_ENVIRONMENT 
+          - name: RUN_FROM
+            valueFrom:
+              configMapKeyRef: 
+                name: homework4-config
+                key: RUN_FROM                            

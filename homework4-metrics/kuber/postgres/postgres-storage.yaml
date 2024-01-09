@@ -1,0 +1,31 @@
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: homework4-postgres-pv  # Sets PV's name
+  namespace: homework4
+  labels:
+    type: local  # Sets PV's type to local
+    app: homework4-app
+spec:
+  storageClassName: manual
+  capacity:
+    storage: 2Gi # Sets PV Volume
+  accessModes:
+    - ReadWriteMany
+  hostPath:
+    path: "/mnt/data"
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: homework4-postgres-pvc  # Sets name of PVC
+  namespace: homework4
+  labels:
+    app: homework4-db
+spec:
+  storageClassName: manual
+  accessModes:
+    - ReadWriteMany  # Sets read and write access
+  resources:
+    requests:
+      storage: 2Gi  # Sets volume size

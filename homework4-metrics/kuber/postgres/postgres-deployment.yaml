@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: homework4-postgres-depl
+  namespace: homework4
+  labels:
+    app: homework4-db
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: homework4-db
+  template:
+    metadata:
+      labels:
+        app: homework4-db
+    spec:
+      containers:
+        - name: postgres
+          image: postgres:15.4-alpine
+          imagePullPolicy: "IfNotPresent"
+          ports:
+            - containerPort: 5432
+          env:  
+            - name: POSTGRES_DB
+              valueFrom:
+                configMapKeyRef: 
+                  name: homework4-postgres-config
+                  key: POSTGRES_DB  
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: homework4-secrets
+                  key: DB_USER                             
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: homework4-secrets
+                  key: DB_PASSWORD 
+          volumeMounts:
+            - mountPath: /var/lib/postgresql/data
+              name: postgredb
+      volumes:
+        - name: postgredb
+          persistentVolumeClaim:
+            claimName: homework4-postgres-pvc
